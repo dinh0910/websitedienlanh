@@ -1,4 +1,6 @@
-﻿namespace websitedienlanh.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace websitedienlanh.Models
 {
     public class DonDatHang
     {
@@ -12,6 +14,7 @@
 
         public string? DiaChi { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int TongTien { get; set; }
     }
 }

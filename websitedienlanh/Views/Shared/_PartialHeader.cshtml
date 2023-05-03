@@ -1,0 +1,78 @@
+﻿@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var dm = ViewBag.danhmuc as IQueryable<websitedienlanh.Models.DanhMuc>;
+    var ldm = ViewBag.loaidanhmuc as IQueryable<websitedienlanh.Models.LoaiDanhMuc>;
+    var c = 0;
+}
+
+<header class="p-3 mb-3 border-bottom bg-danger">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand link-light" href="/">
+                    <img src="~/logo.png" width="100" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @{
+                        var session = HttpContextAccessor.HttpContext.Session;
+                        string jsoncart = session.GetString(websitedienlanh.Controllers.HomeController.CARTKEY);
+                        if (jsoncart != null)
+                        {
+                            var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+                            c = cart.Count;
+                        }
+                    }
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link link-light" aria-current="page" href="/">Trang chủ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link link-light" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                Danh mục
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach(var item in ldm){
+                                    <li class="dropend">
+                                        <a class="dropdown-item" href="#">@item.Ten</a>
+                                        <ul class="dropdown-menu dropdown-submenu">
+                                            @foreach(var item1 in dm){
+                                                if (item1.LoaiDanhMucID == item.LoaiDanhMucID)
+                                                {
+                                                    <li>
+                                                        <a class="dropdown-item" asp-controller="Home" asp-action="Category" asp-route-id="@item1.DanhMucID">
+                                                            @item1.TenDanhMuc
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-light" href="#">Liên hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-light text-white position-relative" asp-controller="Home" asp-action="ViewCart">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-danger">
+                                    @c
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search" asp-action="Search">
+                        <input class="form-control me-2" type="search" name="search" style="width: 250px;" placeholder="Bạn muốn tìm sản phẩm?" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

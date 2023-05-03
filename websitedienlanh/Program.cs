@@ -7,7 +7,7 @@ builder.Services.AddDbContext<websitedienlanhContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options => {
     options.Cookie.Name = "WebsiteDienTuDienLanh";
     options.IdleTimeout = TimeSpan.FromDays(60);

@@ -49,6 +49,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // GET: Admin/DanhMucs/Create
         public IActionResult Create()
         {
+            ViewData["LoaiDanhMucID"] = new SelectList(_context.LoaiDanhMuc, "LoaiDanhMucID", "Ten");
             return View();
         }
 
@@ -65,6 +66,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LoaiDanhMucID"] = new SelectList(_context.LoaiDanhMuc, "LoaiDanhMucID", "Ten", danhMuc.LoaiDanhMucID);
             return View(danhMuc);
         }
 

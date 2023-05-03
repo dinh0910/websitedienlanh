@@ -31,17 +31,10 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // GET: Admin/DonDatHangs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.DonDatHang == null)
-            {
-                return NotFound();
-            }
+            var donDatHang = _context.ChiTietDatHang.Include(d => d.DonDatHang)
+                .Where(m => m.DonDatHangID == id);
 
-            var donDatHang = await _context.DonDatHang
-                .FirstOrDefaultAsync(m => m.DonDatHangID == id);
-            if (donDatHang == null)
-            {
-                return NotFound();
-            }
+            ViewBag.ddh = _context.DonDatHang.FirstOrDefault(d => d.DonDatHangID == id);
 
             return View(donDatHang);
         }
@@ -160,5 +153,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         {
           return (_context.DonDatHang?.Any(e => e.DonDatHangID == id)).GetValueOrDefault();
         }
+
+
     }
 }

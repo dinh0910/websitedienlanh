@@ -1,4 +1,6 @@
-﻿namespace websitedienlanh.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace websitedienlanh.Models
 {
     public class SanPham
     {
@@ -14,6 +16,7 @@
 
         public string? HinhAnh { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:#,##0} đ")]
         public int DonGia { get; set; }
 
         public int SoLuong { get; set; }

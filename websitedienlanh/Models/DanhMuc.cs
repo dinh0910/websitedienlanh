@@ -5,6 +5,7 @@
         public int DanhMucID { get; set; }
 
         public int LoaiDanhMucID { get; set; }
+        public LoaiDanhMuc? LoaiDanhMuc { get; set; }
 
         public string? TenDanhMuc { get; set; }
     }

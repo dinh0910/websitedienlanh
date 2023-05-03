@@ -1,0 +1,41 @@
+﻿@model IEnumerable<websitedienlanh.Models.SanPham>
+
+@{
+    var dm = (DanhMuc)ViewBag.dm;
+}
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="p-3 bg-white">
+            <div class="mt-3">
+                <h3>Kết quả tìm kiếm</h3>
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-12 col-lg-3 mb-4 mb-lg-0">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+                                    <img src="~/images/products/@item.HinhAnh" class="w-100" height="200" />
+                                    <p class="card-text fw-bold fs-5 mb-0">@item.Ten</p>
+                                    <h5 class="text-danger">@Html.DisplayFor(modelItem => item.DonGia)</h5>
+                                    <div class="row">
+                                        <div class="col">
+                                            <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.SanPhamID" role="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a asp-controller="Home" asp-action="Details" asp-route-id="@item.SanPhamID" role="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

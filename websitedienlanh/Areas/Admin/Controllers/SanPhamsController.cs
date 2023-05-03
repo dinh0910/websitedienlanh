@@ -27,26 +27,6 @@ namespace websitedienlanh.Areas.Admin.Controllers
             return View(await websitedienlanhContext.ToListAsync());
         }
 
-        // GET: Admin/SanPhams/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.SanPham == null)
-            {
-                return NotFound();
-            }
-
-            var sanPham = await _context.SanPham
-                .Include(s => s.DanhMuc)
-                .Include(s => s.ThuongHieu)
-                .FirstOrDefaultAsync(m => m.SanPhamID == id);
-            if (sanPham == null)
-            {
-                return NotFound();
-            }
-
-            return View(sanPham);
-        }
-
         // GET: Admin/SanPhams/Create
         public IActionResult Create()
         {
@@ -193,6 +173,77 @@ namespace websitedienlanh.Areas.Admin.Controllers
                 }
             }
             return fn;
+        }
+
+        // GET: Admin/SanPhams/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            var sanPham = await _context.SanPham
+                .Include(s => s.DanhMuc)
+                .Include(s => s.ThuongHieu)
+                .FirstOrDefaultAsync(m => m.SanPhamID == id);
+            ViewBag.mota = _context.MoTa;
+            ViewBag.thongso = _context.ThongSo;
+            ViewBag.hinhanh = _context.HinhAnh;
+            return View(sanPham);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(IFormFile file, int? id, [Bind("ThongSoID,SanPhamID,TenThongSo,NoiDung")] ThongSo thongSo,
+            [Bind("HinhAnhID,SanPhamID,Anh")] HinhAnh hinhAnh, [Bind("MoTaID,SanPhamID,NoiDungMoTa")] MoTa moTa)
+        {
+            if (moTa.NoiDungMoTa != null)
+            {
+                _context.Update(moTa);
+                await _context.SaveChangesAsync();
+            }
+            else if (thongSo.NoiDung != null || thongSo.TenThongSo != null)
+            {
+                _context.Update(thongSo);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                hinhAnh.Anh = Upload(file);
+                _context.Update(hinhAnh);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteMoTa(int? id)
+        {
+            var tt = await _context.MoTa
+                    .FirstOrDefaultAsync(m => m.SanPhamID == id);
+
+            _context.MoTa.Remove(tt);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteHinhAnh(int? id)
+        {
+            var tt = await _context.HinhAnh
+                    .FirstOrDefaultAsync(m => m.SanPhamID == id);
+
+            _context.HinhAnh.Remove(tt);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> DeleteThongSo(int? id)
+        {
+            var tt = await _context.ThongSo
+                    .FirstOrDefaultAsync(m => m.SanPhamID == id);
+
+            _context.ThongSo.Remove(tt);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
     }
 }

@@ -1,0 +1,88 @@
+﻿@model websitedienlanh.Models.SanPham
+
+@{
+    var ts = ViewBag.thongso as IQueryable<websitedienlanh.Models.ThongSo>;
+    var mt = ViewBag.mota as IQueryable<websitedienlanh.Models.MoTa>;
+    var ha = ViewBag.hinhanh as IQueryable<websitedienlanh.Models.HinhAnh>;
+}
+
+<div class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach (var item in ha)
+                        {
+                            <div class="carousel-item active">
+                                <img src="~/images/products/@item.Anh" class="d-block w-100">
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-6 offset-sm-1">
+                <h2 class="fw-bold mt-3">@Model.Ten</h2>
+                <dl class="row">
+                    <dt class="col-sm-4">Thương hiệu</dt>
+                    <dd class="col-sm-8"><a href="#">@Model.ThuongHieu.Ten</a></dd>
+
+                    <dt class="col-sm-4">Thời gian giao hàng</dt>
+                    <dd class="col-sm-8">3-4 ngày</dd>
+
+                    <dt class="col-sm-4">Tình trạng</dt>
+                    <dd class="col-sm-8">Còn hàng</dd>
+                </dl>
+                <div class="col-md">
+                    <a class="btn btn-outline-secondary" role="button">Thêm vào giỏ</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-5">
+            <div class="row">
+                <div class="col-8">
+                    <div class="border shadow-lg rounded">
+                        <div class="p-3">
+                            @foreach (var item in mt)
+                            {
+                                if (item.SanPhamID == Model.SanPhamID)
+                                {
+                                    @Html.Raw(item.NoiDungMoTa)
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="border shadow-lg rounded">
+                        <div class="p-3">
+                            <h5>Thông số kỹ thuật</h5>
+                            <table class="table table-bordered">
+                                @foreach (var item in ts)
+                                {
+                                    if (item.SanPhamID == Model.SanPhamID)
+                                    {
+                                        <tr>
+                                            <th>@item.TenThongSo</th>
+                                            <td>@item.NoiDung</td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
