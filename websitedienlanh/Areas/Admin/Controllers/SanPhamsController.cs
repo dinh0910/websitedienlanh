@@ -30,8 +30,8 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // GET: Admin/SanPhams/Create
         public IActionResult Create()
         {
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID");
-            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "ThuongHieuID");
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "TenDanhMuc");
+            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "Ten");
             return View();
         }
 
@@ -49,8 +49,8 @@ namespace websitedienlanh.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", sanPham.DanhMucID);
-            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "ThuongHieuID", sanPham.ThuongHieuID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "TenDanhMuc", sanPham.DanhMucID);
+            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return View(sanPham);
         }
 
@@ -67,8 +67,8 @@ namespace websitedienlanh.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", sanPham.DanhMucID);
-            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "ThuongHieuID", sanPham.ThuongHieuID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "TenDanhMuc", sanPham.DanhMucID);
+            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return View(sanPham);
         }
 
@@ -108,8 +108,8 @@ namespace websitedienlanh.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "DanhMucID", sanPham.DanhMucID);
-            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "ThuongHieuID", sanPham.ThuongHieuID);
+            ViewData["DanhMucID"] = new SelectList(_context.DanhMuc, "DanhMucID", "TenDanhMuc", sanPham.DanhMucID);
+            ViewData["ThuongHieuID"] = new SelectList(_context.Set<ThuongHieu>(), "ThuongHieuID", "Ten", sanPham.ThuongHieuID);
             return View(sanPham);
         }
 
@@ -191,7 +191,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(IFormFile file, int? id, [Bind("ThongSoID,SanPhamID,TenThongSo,NoiDung")] ThongSo thongSo,
-            [Bind("HinhAnhID,SanPhamID,Anh")] HinhAnh hinhAnh, [Bind("MoTaID,SanPhamID,NoiDungMoTa")] MoTa moTa)
+            [Bind("HinhAnhID,SanPhamID,Anh,Active")] HinhAnh hinhAnh, [Bind("MoTaID,SanPhamID,NoiDungMoTa")] MoTa moTa)
         {
             if (moTa.NoiDungMoTa != null)
             {
@@ -235,10 +235,10 @@ namespace websitedienlanh.Areas.Admin.Controllers
             return RedirectToAction("Details", "SanPhams", routeValues: new { id });
         }
 
-        public async Task<IActionResult> DeleteThongSo(int? id)
+        public async Task<IActionResult> DeleteThongSo(int? id, int? idts)
         {
             var tt = await _context.ThongSo
-                    .FirstOrDefaultAsync(m => m.SanPhamID == id);
+                    .FirstOrDefaultAsync(m => m.ThongSoID == idts);
 
             _context.ThongSo.Remove(tt);
             await _context.SaveChangesAsync();

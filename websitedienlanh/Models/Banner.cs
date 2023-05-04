@@ -4,8 +4,8 @@
     {
         public int BannerID { get; set; }
 
-        public string HinhAnh { get; set; }
+        public string? HinhAnh { get; set; }
 
-        public string Active { get; set; }
+        public string? Active { get; set; }
     }
 }

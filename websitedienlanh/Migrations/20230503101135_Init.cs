@@ -23,7 +23,20 @@ namespace websitedienlanh.Migrations
                     table.PrimaryKey("PK_Banner", x => x.BannerID);
                 });
 
-            migrationBuilder.CreateTable(
+			migrationBuilder.CreateTable(
+	name: "LoaiDanhMuc",
+	columns: table => new
+	{
+		LoaiDanhMucID = table.Column<int>(type: "int", nullable: false)
+			.Annotation("SqlServer:Identity", "1, 1"),
+		Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
+	},
+	constraints: table =>
+	{
+		table.PrimaryKey("PK_LoaiDanhMuc", x => x.LoaiDanhMucID);
+	});
+
+			migrationBuilder.CreateTable(
                 name: "DanhMuc",
                 columns: table => new
                 {
@@ -35,7 +48,13 @@ namespace websitedienlanh.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DanhMuc", x => x.DanhMucID);
-                });
+					table.ForeignKey(
+	                    name: "FK_DanhMuc_LoaiDanhMuc_LoaiDanhMucID",
+	                    column: x => x.LoaiDanhMucID,
+	                    principalTable: "LoaiDanhMuc",
+	                    principalColumn: "LoaiDanhMucID",
+	                    onDelete: ReferentialAction.Cascade);
+				    });
 
             migrationBuilder.CreateTable(
                 name: "DonDatHang",
@@ -54,32 +73,9 @@ namespace websitedienlanh.Migrations
                     table.PrimaryKey("PK_DonDatHang", x => x.DonDatHangID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "LoaiDanhMuc",
-                columns: table => new
-                {
-                    LoaiDanhMucID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ten = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoaiDanhMuc", x => x.LoaiDanhMucID);
-                });
 
-            migrationBuilder.CreateTable(
-                name: "MoTa",
-                columns: table => new
-                {
-                    MoTaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SanPhamID = table.Column<int>(type: "int", nullable: false),
-                    NoiDungMoTa = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MoTa", x => x.MoTaID);
-                });
+
+
 
             migrationBuilder.CreateTable(
                 name: "QuyenHan",
@@ -161,7 +157,27 @@ namespace websitedienlanh.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+			migrationBuilder.CreateTable(
+	name: "MoTa",
+	columns: table => new
+	{
+		MoTaID = table.Column<int>(type: "int", nullable: false)
+			.Annotation("SqlServer:Identity", "1, 1"),
+		SanPhamID = table.Column<int>(type: "int", nullable: false),
+		NoiDungMoTa = table.Column<string>(type: "nvarchar(max)", nullable: true)
+	},
+	constraints: table =>
+	{
+		table.PrimaryKey("PK_MoTa", x => x.MoTaID);
+		table.ForeignKey(
+			name: "FK_MoTa_SanPham_SanPhamID",
+			column: x => x.SanPhamID,
+			principalTable: "SanPham",
+			principalColumn: "SanPhamID",
+			onDelete: ReferentialAction.Cascade);
+	});
+
+			migrationBuilder.CreateTable(
                 name: "ChiTietDatHang",
                 columns: table => new
                 {
@@ -266,7 +282,17 @@ namespace websitedienlanh.Migrations
                 name: "IX_ThongSo_SanPhamID",
                 table: "ThongSo",
                 column: "SanPhamID");
-        }
+
+			migrationBuilder.CreateIndex(
+	            name: "IX_DanhMuc_LoaiDanhMucID",
+	            table: "DanhMuc",
+	            column: "LoaiDanhMucID");
+
+			migrationBuilder.CreateIndex(
+	            name: "IX_MoTa_SanPhamID",
+	            table: "MoTa",
+	            column: "SanPhamID");
+		}
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {

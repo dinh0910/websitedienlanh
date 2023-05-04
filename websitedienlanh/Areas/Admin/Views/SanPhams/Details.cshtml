@@ -40,7 +40,14 @@
                                 <tr>
                                     <td>@item.TenThongSo</td>
                                     <td>@item.NoiDung</td>
-                                    <td><a asp-action="DeleteThongSo" asp-route-id="@Model.SanPhamID">Delete</a></td>
+                                    <td>
+                                        <form asp-action="DeleteThongSo">
+                                            <input type="hidden" name="id" value="@Model.SanPhamID" />
+                                            <input name="idts" type="hidden" value="@item.ThongSoID" />
+                                            <button class="" type="submit">Delete</button>
+                                        </form>
+                                        @*<a asp-action="DeleteThongSo" asp-route-id="@Model.SanPhamID">Delete</a>*@
+                                    </td>
                                 </tr>
                             }
                         }
@@ -181,7 +188,7 @@
 </div>
 
 <div class="modal fade" id="modalMT" tabindex="-1" aria-labelledby="modalMTLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px;">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="text-center mb-2">

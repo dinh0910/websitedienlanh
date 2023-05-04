@@ -38,12 +38,26 @@ namespace websitedienlanh.Areas.Admin.Controllers
 
             var loaiDanhMuc = await _context.LoaiDanhMuc
                 .FirstOrDefaultAsync(m => m.LoaiDanhMucID == id);
+            ViewBag.dm = _context.DanhMuc;
             if (loaiDanhMuc == null)
             {
                 return NotFound();
             }
 
             return View(loaiDanhMuc);
+        }
+
+        public async Task<IActionResult> DeleteDM(int? id)
+        {
+            //var tt = await _context.DanhMuc.Include(s => s.LoaiDanhMuc)
+                //.FirstOrDefaultAsync(m => m.DanhMucID == id);
+
+            var danhMuc = await _context.DanhMuc.FindAsync(id);
+            _context.DanhMuc.Remove(danhMuc);
+            await _context.SaveChangesAsync();
+
+            return View(nameof(Index));
+            //return RedirectToAction("Details", "LoaiDanhMucs", routeValues: new { id });
         }
 
         // GET: Admin/LoaiDanhMucs/Create

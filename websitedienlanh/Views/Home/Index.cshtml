@@ -2,13 +2,24 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var b = ViewBag.banner as IQueryable<websitedienlanh.Models.Banner>;
 }
 
 <div id="carouselExampleControls" class="container carousel slide pb-3" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="~/images/banners/slider_2.webp" class="d-block w-100" height="500" />
-        </div>
+        @foreach(var item in b){
+            if (item.Active == "active")
+            {
+                <div class="carousel-item active">
+                    <img src="~/images/banners/@item.HinhAnh" class="d-block w-100" height="500" />
+                </div>
+            } else
+            {
+                <div class="carousel-item">
+                    <img src="~/images/banners/@item.HinhAnh" class="d-block w-100" height="500" />
+                </div>
+            }
+        }
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -33,7 +44,7 @@
                         <div class="card-body">
                             <img src="~/images/products/@item.HinhAnh" class="w-100" height="200" />
                             <p class="card-text fw-bold fs-5 mb-0">
-                                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.SanPhamID">
+                                <a class="text-decoration-none text-black" asp-controller="Home" asp-action="Details" asp-route-id="@item.SanPhamID">
                                     @item.Ten
                                 </a>
                             </p>

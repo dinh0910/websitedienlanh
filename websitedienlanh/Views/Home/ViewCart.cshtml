@@ -35,7 +35,7 @@
                                 <th>@(amount.ToString("n0"))đ</th>
                                 <th>
                                     <button type="submit" class="btn btn-link text-decoration-none"><i class="fa-solid fa-rotate-right text-secondary"></i></button>
-                                    <a asp-action="RemoveItem" asp-route-id="@item.SanPhamID"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                                    <a asp-controller="Home" asp-action="RemoveItem" asp-route-id="@item.SanPham.SanPhamID"><i class="fa-regular fa-trash-can text-danger"></i></a>
                                 </th>
                                 </form>
                             </tr>

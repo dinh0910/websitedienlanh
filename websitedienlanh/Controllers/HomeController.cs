@@ -18,17 +18,22 @@ namespace websitedienlanh.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var sp = _context.SanPham.Include(s => s.DanhMuc).Include(s => s.ThuongHieu);
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
-            return View(sp.ToList());
+            ViewBag.banner = _context.Banner;
+            return View(await sp.ToListAsync());
         }
 
         public IActionResult Category(int? id)
         {
-            return View();
+            var sp = _context.SanPham.Include(s => s.DanhMuc).Include(s => s.ThuongHieu).Where(s => s.DanhMucID == id);
+            ViewBag.dm = _context.DanhMuc.FirstOrDefault(s => s.DanhMucID == id);
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            return View(sp);
         }
 
         public IActionResult Search(string? search)
@@ -167,6 +172,15 @@ namespace websitedienlanh.Controllers
             return View();
         }
 
-
+        public IActionResult Details(int? id)
+        {
+            var sp = _context.SanPham.Include(s => s.DanhMuc).Include(s => s.ThuongHieu).FirstOrDefault(s => s.SanPhamID == id);
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thongso = _context.ThongSo;
+            ViewBag.mota = _context.MoTa;
+            ViewBag.hinhanh = _context.HinhAnh;
+            return View(sp);
+        }
     }
 }
