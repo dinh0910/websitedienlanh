@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DanhMuc)
+                Danh mục
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThuongHieu)
+                Thương hiệu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ten)
+                Tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HinhAnh)
+                Hình ảnh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DonGia)
+                Đơn giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SoLuong)
+                Số lượng
             </th>
             <th></th>
         </tr>
@@ -37,10 +37,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DanhMuc.DanhMucID)
+                @Html.DisplayFor(modelItem => item.DanhMuc.TenDanhMuc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ThuongHieu.ThuongHieuID)
+                @Html.DisplayFor(modelItem => item.ThuongHieu.Ten)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ten)

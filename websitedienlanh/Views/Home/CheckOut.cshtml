@@ -46,7 +46,6 @@
                                     @foreach (var item in Model)
                                     {
                                         <div class="fw-bold">@item.SanPham.Ten</div>
-                                        <div class="ms-5"><span>x</span>@item.SoLuong</div>
                                         amount = item.SanPham.DonGia * item.SoLuong;
                                         total += amount;
                                         <div class="ms-auto">@(amount.ToString("n0"))đ</div>

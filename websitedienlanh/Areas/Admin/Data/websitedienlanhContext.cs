@@ -37,5 +37,13 @@ namespace websitedienlanh.Data
         public DbSet<websitedienlanh.Models.ThongSo>? ThongSo { get; set; }
 
         public DbSet<websitedienlanh.Models.ThuongHieu>? ThuongHieu { get; set; }
+
+        public DbSet<websitedienlanh.Models.NhaCungCap>? NhaCungCap { get; set; }
+
+        public DbSet<websitedienlanh.Models.DonViTinh>? DonViTinh { get; set; }
+
+        public DbSet<websitedienlanh.Models.NhapHang>? NhapHang { get; set; }
+
+        public DbSet<websitedienlanh.Models.ChiTietNhapHang>? ChiTietNhapHang { get; set; }
     }
 }
