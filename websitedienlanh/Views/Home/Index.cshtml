@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Home Page";
     var b = ViewBag.banner as IQueryable<websitedienlanh.Models.Banner>;
+    var count = 1;
 }
 
 <div id="carouselExampleControls" class="container carousel slide pb-3" data-bs-ride="carousel">
@@ -41,28 +42,31 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
             @foreach (var item in Model)
             {
-                <div class="col">
-                    <div class="card shadow-lg" style="height: 350px;">
-                        <div class="card-body">
-                            <img src="~/images/products/@item.HinhAnh" class="w-100" height="200" />
-                            <p class="card-text fs-6 mb-0">
-                                <a class="text-decoration-none text-black" asp-controller="Home" asp-action="Details" asp-route-id="@item.SanPhamID">
-                                    @item.Ten
-                                </a>
-                            </p>
-                            <h5 class="text-danger">
-                                @Html.DisplayFor(modelItem => item.DonGia)
-                            </h5>
-                            <div class="row">
-                                <div class="col">
-                                    <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.SanPhamID" role="button" class="w-100 btn btn-sm btn-outline-danger">
-                                        <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+                if (count <= 8) {
+                    <div class="col">
+                        <div class="card shadow-lg" style="height: 350px;">
+                            <div class="card-body">
+                                <img src="~/images/products/@item.HinhAnh" class="w-100" height="200" />
+                                <p class="card-text fs-6 mb-0">
+                                    <a class="text-decoration-none text-black" asp-controller="Home" asp-action="Details" asp-route-id="@item.SanPhamID">
+                                        @item.Ten
                                     </a>
+                                </p>
+                                <h5 class="text-danger">
+                                    @Html.DisplayFor(modelItem => item.DonGia)
+                                </h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <a asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.SanPhamID" role="button" class="w-100 btn btn-sm btn-outline-danger">
+                                            <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    count++;
+                }
             }
         </div>
     </div>

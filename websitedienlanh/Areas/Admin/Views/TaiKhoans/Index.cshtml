@@ -52,12 +52,18 @@
                 @Html.DisplayFor(modelItem => item.DiaChi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.QuyenHan.QuyenHanID)
+                @Html.DisplayFor(modelItem => item.QuyenHan.Ten)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TaiKhoanID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.TaiKhoanID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TaiKhoanID">Delete</a>
+                @if(Context.Session.GetInt32("_QuyenID") == 1)
+                {
+                    <a role="button" class="disabled" aria-disabled="true">Delete</a>
+                } else
+                {
+                    <a asp-action="Delete" asp-route-id="@item.TaiKhoanID">Delete</a>
+                }
             </td>
         </tr>
 }

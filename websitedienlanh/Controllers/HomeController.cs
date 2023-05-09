@@ -199,7 +199,45 @@ namespace websitedienlanh.Controllers
             ViewBag.mota = _context.MoTa;
             ViewBag.hinhanh = _context.HinhAnh;
             ViewBag.thuonghieu = _context.ThuongHieu;
+
+            ViewBag.danhgia = _context.DanhGia;
+            var listdg = _context.DanhGia.Where(d => d.SanPhamID == id);
+            int average = 0;
+            var total = 0;
+            var count = listdg.Count();
+            foreach (var item in listdg)
+            {
+                if (item.SanPhamID == id)
+                {
+                    total += item.MucDo;
+                }
+            }
+            if(count >= 1)
+            {
+                average = total / count;
+            }
+
+            ViewData["average"] = average;
+            ViewData["count"] = count;
             return View(sp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(int? id, [Bind("DanhGiaID,SanPhamID,HoTen,Sdt,MucDo")] DanhGia danhGia)
+        {
+            _context.Add(danhGia);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Home", routeValues: new { id });
+        }
+
+        public async Task<IActionResult> Contact()
+        {
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
+            return View();
         }
     }
 }

@@ -37,24 +37,21 @@
                     Đơn đặt hàng
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="QuyenHans" asp-action="Index">
-                    <span data-feather="layers" class="align-text-bottom"></span>
-                    Quyền hạn
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="TaiKhoans" asp-action="Index">
-                    <span data-feather="layers" class="align-text-bottom"></span>
-                    Tài khoản
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="BaoCaos" asp-action="Index">
-                    <span data-feather="layers" class="align-text-bottom"></span>
-                    Báo cáo thống kê
-                </a>
-            </li>
+            @if(Context.Session.GetInt32("_QuyenID") == 1)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="QuyenHans" asp-action="Index">
+                        <span data-feather="layers" class="align-text-bottom"></span>
+                        Quyền hạn
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="TaiKhoans" asp-action="Index">
+                        <span data-feather="layers" class="align-text-bottom"></span>
+                        Tài khoản
+                    </a>
+                </li>
+            }
         </ul>
     </div>
 </nav>

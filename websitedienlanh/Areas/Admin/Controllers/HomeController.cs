@@ -46,6 +46,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
 				{
 					// Đăng ký SESSION
 					HttpContext.Session.SetInt32(SessionTKAdmin, (int)taiKhoan.TaiKhoanID);
+					HttpContext.Session.SetInt32(SessionQuyen, (int)taiKhoan.QuyenHanID);
 					HttpContext.Session.SetString(SessionTenDN, taiKhoan.TenTaiKhoan);
 					//HttpContext.Session.SetString(SessionHoten, taiKhoan.HoTen);
 					//HttpContext.Session.SetString(SessionEmail, taiKhoan.Email);
@@ -71,12 +72,39 @@ namespace websitedienlanh.Areas.Admin.Controllers
 		[Route("/admin/home")]
 		public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("_TaiKhoanID") != null)
+            {
+                var listdoanhthuthang = new List<int?>();
+                var dondathang = _context.DonDatHang.Where(x => x.NgayLap.Month >= 1 && x.NgayLap.Month <= 12);
+                for (int i = 1; i <= 12; i++)
+                {
+                    var doanhthu = dondathang.Where(x => x.NgayLap.Month == i && x.TongTien != null);
+                    var tongtien = 0;
+
+                    if (doanhthu != null)
+                    {
+                        foreach (var x in doanhthu)
+                        {
+                            tongtien += x.TongTien;
+                        }
+                        listdoanhthuthang.Add(tongtien);
+                    }
+                    else
+                    {
+                        listdoanhthuthang.Add(0);
+                    }
+                }
+                ViewData["doanhthuthang"] = listdoanhthuthang;
+
+                return View();
+            }
+            return RedirectToAction("Login", "Home");
         }
 
 		public ActionResult Logout()
 		{
 			HttpContext.Session.Remove("_TaiKhoanID");
+			HttpContext.Session.Remove("_QuyenID");
 			//HttpContext.Session.Remove("_Hoten");
 			HttpContext.Session.Remove("_TenTaiKhoan");
 			//HttpContext.Session.Remove("_Quyen");

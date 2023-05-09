@@ -45,5 +45,7 @@ namespace websitedienlanh.Data
         public DbSet<websitedienlanh.Models.NhapHang>? NhapHang { get; set; }
 
         public DbSet<websitedienlanh.Models.ChiTietNhapHang>? ChiTietNhapHang { get; set; }
+        
+        public DbSet<websitedienlanh.Models.DanhGia>? DanhGia { get; set; }
     }
 }

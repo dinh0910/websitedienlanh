@@ -30,7 +30,7 @@
                                 <form asp-action="UpdateItem" method="post">
                                 <th>
                                     <input name="id" type="hidden" asp-for="@(item.SanPham.SanPhamID)" />
-                                    <input type="number" name="quantity" style="width:50px;" min="1" asp-for="@(item.SoLuong)" />
+                                    <input type="number" name="quantity" style="width:50px;" asp-for="@(item.SoLuong)" />
                                 </th>
                                 <th>@(amount.ToString("n0"))đ</th>
                                 <th>

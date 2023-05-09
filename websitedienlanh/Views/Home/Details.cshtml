@@ -4,6 +4,10 @@
     var ts = ViewBag.thongso as IQueryable<websitedienlanh.Models.ThongSo>;
     var mt = ViewBag.mota as IQueryable<websitedienlanh.Models.MoTa>;
     var ha = ViewBag.hinhanh as IQueryable<websitedienlanh.Models.HinhAnh>;
+    var dg = ViewBag.danhgia as IQueryable<websitedienlanh.Models.DanhGia>;
+    int average = (int)ViewData["average"];
+    int count = (int)ViewData["count"];
+    var total = 0;
 }
 
 <div class="py-5 bg-light">
@@ -41,13 +45,100 @@
                 <h2 class="fw-bold mt-3">@Model.Ten</h2>
                 <dl class="row">
                     <dt class="col-sm-4">
-                        <i class="fa-regular fa-star text-warning"></i>
-                        <i class="fa-regular fa-star text-warning"></i>
-                        <i class="fa-regular fa-star text-warning"></i>
-                        <i class="fa-regular fa-star text-warning"></i>
-                        <i class="fa-regular fa-star text-warning"></i>
+                        @if(average == 1)
+                        {
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                        } else if (average == 2)
+                        {
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                        } else if(average == 3)
+                        {
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                        } else if(average == 4)
+                        {
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                        } else if(average == 5)
+                        {
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                        } else
+                        {
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                            <i class="fa-regular fa-star text-warning"></i>
+                        }
+                        
                     </dt>
-                    <dd class="col-sm-8"><a >Đánh giá</a></dd>
+                    <dd class="col-sm-8"><a role="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">Đánh giá</a>(@count đánh giá)</dd>
+
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Đánh giá sản phẩm @Model.Ten</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form asp-action="Details">
+                                        <input hidden asp-for="SanPhamID" value="@Model.SanPhamID" />
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Họ tên</label>
+                                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập họ tên của bạn">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput2" class="form-label">Sdt</label>
+                                            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Nhập số điện thoại của bạn">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="danhgia" class="form-label">Đánh giá</label>
+                                            <select name="MucDo" id="danhgia" class="form-select">
+                                                <option selected>--Chọn--</option>
+                                                <option value="1">
+                                                    1 sao
+                                                </option>
+                                                <option value="2">
+                                                    2 sao
+                                                </option>
+                                                <option value="3">
+                                                    3 sao
+                                                </option>
+                                                <option value="4">
+                                                    4 sao
+                                                </option>
+                                                <option value="5">
+                                                    5 sao
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            Đánh giá
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <dt class="col-sm-4">Thương hiệu</dt>
                     <dd class="col-sm-8"><a asp-controller="Home" asp-action="TradeMark" asp-route-id="@Model.ThuongHieuID">@Model.ThuongHieu.Ten</a></dd>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using websitedienlanh.Data;
+using websitedienlanh.Libs;
 using websitedienlanh.Models;
 
 namespace websitedienlanh.Areas.Admin.Controllers
@@ -49,7 +50,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // GET: Admin/TaiKhoans/Create
         public IActionResult Create()
         {
-            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "QuyenHanID");
+            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "Ten");
             return View();
         }
 
@@ -62,11 +63,12 @@ namespace websitedienlanh.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                taiKhoan.MatKhau = SHA1.ComputeHash(taiKhoan.MatKhau);
                 _context.Add(taiKhoan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "QuyenHanID", taiKhoan.QuyenHanID);
+            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "Ten", taiKhoan.QuyenHanID);
             return View(taiKhoan);
         }
 
@@ -83,7 +85,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "QuyenHanID", taiKhoan.QuyenHanID);
+            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "Ten", taiKhoan.QuyenHanID);
             return View(taiKhoan);
         }
 
@@ -92,7 +94,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TaiKhoanID,TenTaiKhoan,MatKhau,HoTen,Sdt,DiaChi,QuyenHanID")] TaiKhoan taiKhoan)
+        public async Task<IActionResult> Edit(string? matkhau, int id, [Bind("TaiKhoanID,TenTaiKhoan,MatKhau,HoTen,Sdt,DiaChi,QuyenHanID")] TaiKhoan taiKhoan)
         {
             if (id != taiKhoan.TaiKhoanID)
             {
@@ -103,6 +105,10 @@ namespace websitedienlanh.Areas.Admin.Controllers
             {
                 try
                 {
+                    if(matkhau != null)
+                    {
+                        taiKhoan.MatKhau = SHA1.ComputeHash(matkhau);
+                    }
                     _context.Update(taiKhoan);
                     await _context.SaveChangesAsync();
                 }
@@ -119,7 +125,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "QuyenHanID", taiKhoan.QuyenHanID);
+            ViewData["QuyenHanID"] = new SelectList(_context.QuyenHan, "QuyenHanID", "Ten", taiKhoan.QuyenHanID);
             return View(taiKhoan);
         }
 

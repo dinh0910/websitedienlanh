@@ -77,7 +77,7 @@ namespace websitedienlanh.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(IFormFile file, int id, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,SoLuong")] SanPham sanPham)
+        public async Task<IActionResult> Edit(IFormFile? file, int id, [Bind("SanPhamID,DanhMucID,ThuongHieuID,Ten,HinhAnh,DonGia,SoLuong")] SanPham sanPham)
         {
             if (id != sanPham.SanPhamID)
             {
