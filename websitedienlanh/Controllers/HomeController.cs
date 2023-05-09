@@ -24,6 +24,7 @@ namespace websitedienlanh.Controllers
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
             ViewBag.banner = _context.Banner;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View(await sp.ToListAsync());
         }
 
@@ -33,6 +34,19 @@ namespace websitedienlanh.Controllers
             ViewBag.dm = _context.DanhMuc.FirstOrDefault(s => s.DanhMucID == id);
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
+
+            return View(sp);
+        }
+
+        public IActionResult TradeMark(int? id)
+        {
+            var sp = _context.SanPham.Include(s => s.DanhMuc).Include(s => s.ThuongHieu).Where(s => s.ThuongHieuID == id);
+            ViewBag.dm = _context.ThuongHieu.FirstOrDefault(s => s.ThuongHieuID == id);
+            ViewBag.danhmuc = _context.DanhMuc;
+            ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
+
             return View(sp);
         }
 
@@ -41,6 +55,7 @@ namespace websitedienlanh.Controllers
             var sp = _context.SanPham.Where(s => s.Ten.Contains(search));
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View(sp);
         }
 
@@ -119,12 +134,14 @@ namespace websitedienlanh.Controllers
         {
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View(GetCartItems());
         }
         public IActionResult CheckOut()
         {
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View(GetCartItems());
         }
 
@@ -169,6 +186,7 @@ namespace websitedienlanh.Controllers
         {
             ViewBag.danhmuc = _context.DanhMuc;
             ViewBag.loaidanhmuc = _context.LoaiDanhMuc;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View();
         }
 
@@ -180,6 +198,7 @@ namespace websitedienlanh.Controllers
             ViewBag.thongso = _context.ThongSo;
             ViewBag.mota = _context.MoTa;
             ViewBag.hinhanh = _context.HinhAnh;
+            ViewBag.thuonghieu = _context.ThuongHieu;
             return View(sp);
         }
     }

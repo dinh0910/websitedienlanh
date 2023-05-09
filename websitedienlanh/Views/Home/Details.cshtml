@@ -40,8 +40,17 @@
             <div class="col-sm-6 offset-sm-1">
                 <h2 class="fw-bold mt-3">@Model.Ten</h2>
                 <dl class="row">
+                    <dt class="col-sm-4">
+                        <i class="fa-regular fa-star text-warning"></i>
+                        <i class="fa-regular fa-star text-warning"></i>
+                        <i class="fa-regular fa-star text-warning"></i>
+                        <i class="fa-regular fa-star text-warning"></i>
+                        <i class="fa-regular fa-star text-warning"></i>
+                    </dt>
+                    <dd class="col-sm-8"><a>Đánh giá</a></dd>
+
                     <dt class="col-sm-4">Thương hiệu</dt>
-                    <dd class="col-sm-8"><a href="#">@Model.ThuongHieu.Ten</a></dd>
+                    <dd class="col-sm-8"><a asp-controller="Home" asp-action="TradeMark" asp-route-id="@Model.ThuongHieuID">@Model.ThuongHieu.Ten</a></dd>
 
                     <dt class="col-sm-4">Thời gian giao hàng</dt>
                     <dd class="col-sm-8">3-4 ngày</dd>
@@ -50,7 +59,7 @@
                     <dd class="col-sm-8">Còn hàng</dd>
                 </dl>
                 <div class="col-md">
-                    <a class="btn btn-outline-secondary me-3" role="button">Thêm vào giỏ</a>
+                    <a class="btn btn-outline-secondary me-3" asp-action="AddToCart" asp-route-id="@Model.SanPhamID" role="button">Thêm vào giỏ</a>
                     <a class="btn btn-outline-info" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Xem thông số</a>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
